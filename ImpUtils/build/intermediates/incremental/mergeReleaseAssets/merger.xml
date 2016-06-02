@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merger version="3"><dataSet config="main"><source path="E:\Android Work\musictest\ImpUtils\src\main\assets"><file name="hack.apk" path="E:\Android Work\musictest\ImpUtils\src\main\assets\hack.apk"/></source><source path="E:\Android Work\musictest\ImpUtils\build\generated\assets\shaders\release"/></dataSet><dataSet config="release"><source path="E:\Android Work\musictest\ImpUtils\src\release\assets"/></dataSet></merger>

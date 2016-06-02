@@ -1,0 +1,59 @@
+package org.srr.dev.adapter.QuickDeAdapter;
+
+import android.content.Context;
+
+import java.util.List;
+
+
+/**
+ * Created by Zoi.
+ * E-mail：KyluZoi@gmail.com
+ * 2016/5/12
+ */
+public abstract class QuickAdapter<T> extends BaseQuickAdapter<T, BaseAdapterHelper> {
+
+    /**
+     * Create a QuickAdapter.
+     *
+     * @param context     The context.
+     * @param layoutResId The layout resource id of each item.
+     */
+    public QuickAdapter(Context context, int layoutResId) {
+        super(context, layoutResId);
+    }
+
+    /**
+     * Same as QuickAdapter#QuickAdapter(Context,int) but with
+     * some initialization data.
+     *
+     * @param context     The context.
+     * @param layoutResId The layout resource id of each item.
+     * @param data        A new list is created out of this one to avoid mutable list
+     */
+    public QuickAdapter(Context context, int layoutResId, List<T> data) {
+        super(context, layoutResId, data);
+    }
+
+    /**
+     * Create a multi-view-type QuickAdapter
+     *
+     * @param context              The context
+     * @param multiItemTypeSupport multiitemtypesupport
+     */
+    protected QuickAdapter(Context context, MultiItemTypeSupport<T> multiItemTypeSupport) {
+        super(context, multiItemTypeSupport);
+    }
+
+    /**
+     * Same as QuickAdapter#QuickAdapter(Context,MultiItemTypeSupport) but with
+     * some initialization data
+     *
+     * @param context
+     * @param multiItemTypeSupport
+     * @param data
+     */
+    protected QuickAdapter(Context context, MultiItemTypeSupport<T> multiItemTypeSupport, List<T> data) {
+        super(context, multiItemTypeSupport, data);
+    }
+
+}
