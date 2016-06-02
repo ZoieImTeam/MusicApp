@@ -16,8 +16,8 @@ import org.srr.dev.base.BaseActivity;
  */
 public class MainActivity extends BaseActivity {
 
-    protected NotificationCompat.Builder mBuilder;
-    static final int mNotificationCompatNo=1;
+
+
 
     @Override
     protected void initGetIntent() {
@@ -33,16 +33,8 @@ public class MainActivity extends BaseActivity {
     public void initView() {
         FragmentManager supportFragmentManager = getSupportFragmentManager();
         supportFragmentManager.beginTransaction().add(R.id.flyt_base_view, ButtonFragment.newInstance()).commit();
-        mBuilder=new NotificationCompat.Builder(this)
-                .setSmallIcon(R.mipmap.ic_launcher)
-                .setContentTitle("测试测试测试")
-                .setContentText("内容填充测试");
-        mBuilder.setAutoCancel(true);//设置后点击消失
-        mBuilder.setOngoing(true);//滑动不消失
-        NotificationManager mNotifyMgr= (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-        mNotifyMgr.notify(mNotificationCompatNo, mBuilder.build());
-
     }
+
 
     @Override
     public void initData() {
