@@ -32,10 +32,19 @@ public class MusicEntity implements Parcelable {
     public void setImag(String imag) {
         this.imag = imag;
     }
+    public String getSingerName() {
+        return singerName;
+    }
 
+    public void setSingerName(String singerName) {
+        this.singerName = singerName;
+    }
     String name;
     String url;
     String imag;
+    public boolean pinned;
+    String singerName;
+
 
     @Override
     public int describeContents() {
@@ -47,6 +56,7 @@ public class MusicEntity implements Parcelable {
         dest.writeString(this.name);
         dest.writeString(this.url);
         dest.writeString(this.imag);
+        dest.writeString(this.singerName);
     }
 
     public MusicEntity() {
@@ -56,6 +66,7 @@ public class MusicEntity implements Parcelable {
         this.name = in.readString();
         this.url = in.readString();
         this.imag = in.readString();
+        this.singerName = in.readString();
     }
 
     public static final Parcelable.Creator<MusicEntity> CREATOR = new Parcelable.Creator<MusicEntity>() {

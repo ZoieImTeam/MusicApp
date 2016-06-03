@@ -29,8 +29,8 @@ public abstract class BaseFragment extends Fragment implements OnClickListener {
             mContentView = LayoutInflater.from(getActivity()).inflate(getLayoutId(), null);
             this.initBaseView();
             initView(mContentView);
-            initData();
             initRec();
+            initData();
         }
         return mContentView;
     }

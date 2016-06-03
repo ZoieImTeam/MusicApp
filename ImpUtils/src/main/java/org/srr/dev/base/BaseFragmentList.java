@@ -17,22 +17,23 @@ import java.util.ArrayList;
  * 需传入2泛型 分别是VH和数据类型
  * 暂仅支持一种item类型的适配处理
  */
-public abstract class BaseFragmentList<DataType,VH extends RecyclerView.ViewHolder> extends BaseFragment implements
+public abstract class BaseFragmentList<DataType, VH extends RecyclerView.ViewHolder> extends BaseFragment implements
         XRecyclerView.LoadingListener, SwipeRefreshLayout.OnRefreshListener {
     private XRecyclerView mRecyclerList;
     private SwipeRefreshLayout srl;
     public JRecyclerView jRecyclerView;
 
-    public MyAdapter adapter=new MyAdapter();
+    public MyAdapter adapter = new MyAdapter();
     private ArrayList<DataType> mData;
 
 
     /**
      * 获得布局
+     *
      * @return
      */
     @Override
-    public abstract int getLayoutId() ;
+    public abstract int getLayoutId();
 
     @Override
     protected abstract void initView(View contentView);
@@ -48,11 +49,11 @@ public abstract class BaseFragmentList<DataType,VH extends RecyclerView.ViewHold
 
     @Override
     protected void initRec() {
-        jRecyclerView=initJrec();
-        mRecyclerList=jRecyclerView.getRecyclerView();
-        srl=jRecyclerView.getSwipeRefreshLayout();
+        jRecyclerView = initJrec();
+        mRecyclerList = jRecyclerView.getRecyclerView();
+        srl = jRecyclerView.getSwipeRefreshLayout();
         initrecs();
-        mData=getmDatalist();
+        mData = getmDatalist();
         adapter.setData(mData);
         mRecyclerList.setAdapter(adapter);
         mRecyclerList.setLayoutManager(setLayoutManager());
@@ -61,12 +62,13 @@ public abstract class BaseFragmentList<DataType,VH extends RecyclerView.ViewHold
 
     private void initrecs() {
         mRecyclerList.setLoadingListener(this);
-        srl.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                swipRefresh();
-            }
-        });
+        if (srl.isEnabled())
+            srl.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+                @Override
+                public void onRefresh() {
+                    swipRefresh();
+                }
+            });
     }
 
 
@@ -86,41 +88,46 @@ public abstract class BaseFragmentList<DataType,VH extends RecyclerView.ViewHold
 
     /**
      * 布局管理器
+     *
      * @return
      */
     protected abstract RecyclerView.LayoutManager setLayoutManager();
 
     /**
      * 传入自定义控件 JrecyclerView
+     *
      * @return
      */
     protected abstract JRecyclerView initJrec();
 
     /**
      * 传入数据类型集合
+     *
      * @return
      */
     protected abstract ArrayList<DataType> getmDatalist();
 
     /**
      * 返回Item的布局文件
-     * @param viewType  item 的类型
-     * @return
-     * 可以通过 枚举选择返回不同的item
+     *
+     * @param viewType item 的类型
+     * @return 可以通过 枚举选择返回不同的item
      */
     protected abstract int getItemLayout(int viewType);
 
     /**
-     *用于获得ViewHolder,持有每个Item的的所有界面元素
+     * 用于获得ViewHolder,持有每个Item的的所有界面元素
      * 通常 new VH(v)
+     *
      * @return
      */
     protected abstract VH getViewMyViewHolder(View v);
 
     /**
      * 用于 Adapter绑定VH
+     *
      * @param holder
-     * @param i (position)
+     * @param i        (position)
      * @param dataType data的数据类型
      */
     protected abstract void onBindAdapterHolder(VH holder, int i, DataType dataType);
@@ -128,17 +135,16 @@ public abstract class BaseFragmentList<DataType,VH extends RecyclerView.ViewHold
     /**
      * 用于下拉刷新结束
      */
-    public void dismiss()
-    {
+    public void dismiss() {
         srl.setRefreshing(false);
     }
 
     /**
      * 设置下拉刷新是否可用，默认可用
+     *
      * @param aEnable
      */
-    public void setSrlEnable(boolean aEnable)
-    {
+    public void setSrlEnable(boolean aEnable) {
         srl.setEnabled(aEnable);
     }
 
@@ -146,20 +152,18 @@ public abstract class BaseFragmentList<DataType,VH extends RecyclerView.ViewHold
      * 加载更多状态重置
      * 出现加载更多状态为已完成，下拉刷新后没办法继续加载更多后，需在下拉刷新部分调用该方法
      */
-    public void resetMoreState()
-    {
+    public void resetMoreState() {
         mRecyclerList.resetStatus();
     }
 
     /**
      * 抽象父类根据数据类型和VH，生成的adapter
      */
-    public class MyAdapter extends RecyclerViewDataAdapter<DataType,VH>
-    {
+    public class MyAdapter extends RecyclerViewDataAdapter<DataType, VH> {
 
         @Override
         public void onBindHolder(VH holder, int i, DataType dataType) {
-            onBindAdapterHolder(holder,i,dataType);
+            onBindAdapterHolder(holder, i, dataType);
         }
 
         @Override
@@ -176,8 +180,7 @@ public abstract class BaseFragmentList<DataType,VH extends RecyclerView.ViewHold
     /**
      * 加载更多完成调用
      */
-    public void loadMoreComplete()
-    {
+    public void loadMoreComplete() {
         mRecyclerList.loadMoreComplete();
     }
 
