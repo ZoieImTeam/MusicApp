@@ -9,6 +9,13 @@ import android.os.Parcelable;
  * 2016/5/31
  */
 public class MusicEntity implements Parcelable {
+
+    String name;
+    String url;
+    String imag;
+    String singerName;
+
+
     public String getName() {
         return name;
     }
@@ -32,10 +39,13 @@ public class MusicEntity implements Parcelable {
     public void setImag(String imag) {
         this.imag = imag;
     }
+    public String getSingerName() {
+        return singerName;
+    }
 
-    String name;
-    String url;
-    String imag;
+    public void setSingerName(String singerName) {
+        this.singerName = singerName;
+    }
 
     @Override
     public int describeContents() {
@@ -47,6 +57,7 @@ public class MusicEntity implements Parcelable {
         dest.writeString(this.name);
         dest.writeString(this.url);
         dest.writeString(this.imag);
+        dest.writeString(this.singerName);
     }
 
     public MusicEntity() {
@@ -56,9 +67,10 @@ public class MusicEntity implements Parcelable {
         this.name = in.readString();
         this.url = in.readString();
         this.imag = in.readString();
+        this.singerName = in.readString();
     }
 
-    public static final Parcelable.Creator<MusicEntity> CREATOR = new Parcelable.Creator<MusicEntity>() {
+    public static final Creator<MusicEntity> CREATOR = new Creator<MusicEntity>() {
         public MusicEntity createFromParcel(Parcel source) {
             return new MusicEntity(source);
         }
