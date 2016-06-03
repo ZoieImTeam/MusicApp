@@ -20,8 +20,7 @@ import butterknife.OnClick;
  * 2016/6/2
  */
 public class ButtonFragment extends BaseFragment {
-    @Bind(R.id.btn_start)
-    Button btnStart;
+    @Bind(R.id.btn_start) Button btnStart;
 
     private boolean mOpen = true;
     private Intent mMusicIntent;
