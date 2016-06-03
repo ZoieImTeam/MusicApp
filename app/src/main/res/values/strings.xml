@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">musictest</string>
+    <string name="song_name">歌名</string>
 </resources>

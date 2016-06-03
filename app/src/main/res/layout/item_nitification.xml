@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+    
+      <org.srr.dev.view.CircleImageView
+          android:id="@+id/notifi_circle"
+          android:layout_width="80dp"
+          android:layout_height="80dp"
+          />
+      
+      <TextView
+          android:id="@+id/notifi_music_name"
+          android:layout_width="80dp"
+          android:layout_height="25dp"
+          android:layout_toRightOf="@id/notifi_circle"
+          android:layout_marginLeft="20dp"
+          android:layout_marginTop="20dp"
+          android:text="歌名"
+
+          />
+    <TextView
+        android:id="@+id/notifi_singer"
+        android:layout_width="80dp"
+        android:layout_height="15dp"
+        android:layout_toRightOf="@id/notifi_circle"
+        android:layout_marginLeft="20dp"
+        android:layout_below="@id/notifi_music_name"
+        android:layout_marginTop="10dp"
+        android:text="singer"
+        />
+        
+    <Button
+        android:id="@+id/notifi_next"
+        android:layout_width="30dp"
+        android:layout_height="36dp"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="30dp"
+        android:layout_marginTop="25dp"/>
+
+    <Button
+        android:id="@+id/notifi_start"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        android:layout_toLeftOf="@id/notifi_next"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="20dp"/>
+
+    <Button
+        android:id="@+id/notifi_last"
+        android:layout_width="30dp"
+        android:layout_height="36dp"
+        android:layout_toLeftOf="@id/notifi_start"
+        android:layout_marginRight="30dp"
+        android:layout_marginTop="25dp"/>
+    
+</RelativeLayout>
