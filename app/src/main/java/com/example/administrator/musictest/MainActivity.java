@@ -2,9 +2,14 @@ package com.example.administrator.musictest;
 
 import android.app.Notification;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Intent;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.NotificationManagerCompat;
+import android.widget.RemoteViews;
 
+import com.example.administrator.musictest.app.MusicApp;
 import com.example.administrator.musictest.musicui.home.LocalFragment;
 import com.example.administrator.musictest.viewpag.ButtonFragment;
 
@@ -43,4 +48,5 @@ public class MainActivity extends BaseActivity {
     public void refreshData() {
 
     }
+
 }

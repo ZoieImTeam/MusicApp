@@ -6,7 +6,6 @@ import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
-import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -93,7 +92,7 @@ public class MusicService extends Service {
                 playMusic(mMusicEntity.getUrl());
             }
         });
-        NotityReciver receiver = new NotityReciver();
+        ServiceBroad receiver = new ServiceBroad();
         IntentFilter filter = new IntentFilter();
         filter.addAction(Constants.NOTIFY_PLAY);
         filter.addAction(Constants.NOTIFY_NEXT);
@@ -119,15 +118,15 @@ public class MusicService extends Service {
         //播放
         Intent playintent = new Intent(Constants.NOTIFY_PLAY);
         PendingIntent PlayPending = PendingIntent.getBroadcast(MusicService.this, 0, playintent, 0);
-        notification.bigContentView.setOnClickPendingIntent(R.id.notifi_start, PlayPending);
+//        notification.bigContentView.setOnClickPendingIntent(R.id.notifi_start, PlayPending);
         //下一首
         Intent nextintent = new Intent(Constants.NOTIFY_NEXT);
         PendingIntent NextPending = PendingIntent.getBroadcast(MusicService.this, 0, nextintent, 0);
-        notification.bigContentView.setOnClickPendingIntent(R.id.notifi_next, NextPending);
+//        notification.bigContentView.setOnClickPendingIntent(R.id.notifi_next, NextPending);
         //上一首
         Intent preintent = new Intent(Constants.NOTIFY_PREV);
         PendingIntent PreIntent = PendingIntent.getBroadcast(MusicService.this, 0, preintent, 0);
-        notification.bigContentView.setOnClickPendingIntent(R.id.notifi_last, PreIntent);
+//        notification.bigContentView.setOnClickPendingIntent(R.id.notifi_last, PreIntent);
         mManager.notify(Constants.NOTIFY_ID, notification);
     }
 
@@ -147,7 +146,7 @@ public class MusicService extends Service {
             }
             notification.bigContentView.setTextViewText(R.id.notifi_music_name,
                     mMusicEntity.getName() + "-" + mMusicEntity.getSingerName());
-            notification.bigContentView.setImageViewResource(R.id.notifi_start, R.mipmap.minilyric_pause_button_press);
+//            notification.bigContentView.setImageViewResource(R.id.notifi_start, R.mipmap.minilyric_pause_button_press);
             mManager.notify(Constants.NOTIFY_ID, notification);
         }
     }
@@ -218,8 +217,6 @@ public class MusicService extends Service {
         public void playMusic(String MusicURL) {
             MusicService.this.playMusic(MusicURL);
         }
-
-
         //暂停音乐
         @SuppressLint("NewApi")
         public void pauseMusic() {
@@ -240,7 +237,7 @@ public class MusicService extends Service {
             Intent intent = new Intent(Constants.UPDATA_PLAY);
             sendBroadcast(intent);
             notification.bigContentView.setImageViewResource(R.id.notifi_start,
-                    R.mipmap.minilyric_play_button_press);
+                    R.mipmap.minilyric_pause_button_press);
             mManager.notify(Constants.NOTIFY_ID, notification);
         }
 
@@ -303,50 +300,40 @@ public class MusicService extends Service {
         }
     }
 
-    class NotityReciver extends BroadcastReceiver {
+
+    /**
+     * 服务接收到广播后控制音乐
+     */
+    class ServiceBroad extends NotifyReciverBroad{
+
+        @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
         @Override
-        public void onReceive(Context context, Intent intent) {
-            String action = intent.getAction();
-            switch (action) {
-                case Constants.NOTIFY_PLAY:
-                    notifityPlay();
-                    break;
-                case Constants.NOTIFY_NEXT:
-                    notifityPrev();
-                    break;
-                case Constants.NOTIFY_PREV:// 上一首
-                    notifyPrev();
-                    break;
-                default:
-                    break;
+        protected void notifityPlay() {
+            if (isPrepared) {
+                if (binder.isStart()) {
+                    binder.pauseMusic();
+                    notification.bigContentView.setImageViewResource(R.id.notifi_circle,
+                            R.mipmap.minilyric_play_button_press);
+                } else {
+                    binder.start();
+                    notification.bigContentView.setImageViewResource(R.id.notifi_circle,
+                            R.mipmap.minilyric_pause_button_press);
+                }
             }
+            mManager.notify(Constants.NOTIFY_ID, notification);
         }
-    }
 
-    public void notifityPrev() {
-        binder.nextMusic();
-        mManager.notify(Constants.NOTIFY_ID, notification);
-    }
-
-    private void notifyPrev() {
-        binder.befoMusic();
-        mManager.notify(Constants.NOTIFY_ID, notification);
-    }
-
-    @SuppressLint("NewApi")
-    public void notifityPlay() {
-        if (isPrepared) {
-            if (binder.isStart()) {
-                binder.pauseMusic();
-                notification.bigContentView.setImageViewResource(R.id.notifi_circle,
-                        R.mipmap.minilyric_play_button_press);
-            } else {
-                binder.start();
-                notification.bigContentView.setImageViewResource(R.id.notifi_circle,
-                        R.mipmap.minilyric_pause_button_press);
-            }
+        @Override
+        protected void notifityPrev() {
+            binder.nextMusic();
+            mManager.notify(Constants.NOTIFY_ID, notification);
         }
-        mManager.notify(Constants.NOTIFY_ID, notification);
+
+        @Override
+        protected void notifyPrev() {
+            binder.befoMusic();
+            mManager.notify(Constants.NOTIFY_ID, notification);
+        }
     }
 
 }
