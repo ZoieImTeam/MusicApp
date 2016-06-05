@@ -12,6 +12,7 @@ import android.content.IntentFilter;
 import android.media.MediaPlayer;
 import android.os.Binder;
 import android.os.Build;
+import android.os.Bundle;
 import android.os.IBinder;
 import android.support.v7.app.NotificationCompat;
 import android.util.Log;
@@ -55,6 +56,13 @@ public class MusicService extends Service {
         return binder;
     }
 
+
+    public static void startService(Context context,MusicEntity music,String action) {
+        Intent ii=new Intent();
+        ii.putExtra("entity",music);
+        ii.putExtra("action",action);
+        context.startService(ii);
+    }
 
     public void playMusic(String MusicURL) {
         try {
@@ -154,6 +162,7 @@ public class MusicService extends Service {
     @Override
     public void onStart(Intent intent, int startId) {
         Log.e("MusicService", "Start Service");
+
         super.onStart(intent, startId);
     }
 
@@ -213,9 +222,10 @@ public class MusicService extends Service {
         }
     }
 
-    class MusicBinder extends Binder {
-        public void playMusic(String MusicURL) {
-            MusicService.this.playMusic(MusicURL);
+    public class MusicBinder extends Binder {
+        public void playMusic(String musicUrl) {
+            Log.d("MusicBinder", musicUrl);
+            MusicService.this.playMusic(musicUrl);
         }
         //暂停音乐
         @SuppressLint("NewApi")

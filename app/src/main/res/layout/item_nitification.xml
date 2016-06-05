@@ -1,57 +1,58 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="120dp">
-    
-      <ImageView
-          android:id="@+id/notifi_circle"
-          android:layout_width="80dp"
-          android:layout_height="80dp"
-          />
+    android:layout_width="match_parent"
+    android:layout_height="120dp">
 
-      <TextView
-          android:id="@+id/notifi_music_name"
-          android:layout_width="120dp"
-          android:layout_height="wrap_content"
-          android:layout_toRightOf="@id/notifi_circle"
-          android:layout_marginLeft="20dp"
-          android:layout_marginTop="20dp"
-          android:singleLine="true"
-          android:text="歌名"
+    <ImageView
+        android:id="@+id/notifi_circle"
+        android:layout_width="80dp"
+        android:layout_height="80dp" />
 
-          />
+    <TextView
+        android:id="@+id/notifi_music_name"
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_toRightOf="@id/notifi_circle"
+        android:singleLine="true"
+        android:text="歌名"
+
+        />
+
     <TextView
         android:id="@+id/notifi_singer"
         android:layout_width="80dp"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@id/notifi_circle"
-        android:layout_marginLeft="20dp"
         android:layout_below="@id/notifi_music_name"
+        android:layout_marginLeft="20dp"
         android:layout_marginTop="10dp"
-        android:text="singer"
-        />
-        
-    <Button
+        android:layout_toRightOf="@id/notifi_circle"
+        android:text="singer" />
+
+    <TextView
         android:id="@+id/notifi_next"
         android:layout_width="30dp"
         android:layout_height="36dp"
         android:layout_alignParentRight="true"
-        android:layout_marginRight="30dp"
-        android:layout_marginTop="25dp"/>
+        android:layout_marginTop="25dp"
+        android:background="@mipmap/xys" />
 
-    <Button
+    <TextView
         android:id="@+id/notifi_start"
         android:layout_width="45dp"
         android:layout_height="45dp"
-        android:layout_toLeftOf="@id/notifi_next"
         android:layout_marginRight="20dp"
-        android:layout_marginTop="20dp"/>
+        android:layout_marginTop="20dp"
+        android:layout_toLeftOf="@id/notifi_next"
+        android:background="@mipmap/bf_zt" />
 
-    <Button
+    <TextView
         android:id="@+id/notifi_last"
         android:layout_width="30dp"
         android:layout_height="36dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="25dp"
         android:layout_toLeftOf="@id/notifi_start"
-        android:layout_marginRight="30dp"
-        android:layout_marginTop="25dp"/>
-    
+        android:background="@mipmap/sys" />
+
 </RelativeLayout>
