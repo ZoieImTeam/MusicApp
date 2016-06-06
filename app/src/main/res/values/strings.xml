@@ -1,4 +1,9 @@
 <resources>
     <string name="app_name">musictest</string>
     <string name="song_name">歌名</string>
+    <string name="indicator_local">本地</string>
+    <string name="indicator_library">乐库</string>
+    <string name="indicator_ringing">彩铃</string>
+    <string name="indicator_vibration">振动</string>
+
 </resources>
