@@ -4,6 +4,7 @@ import android.app.NotificationManager;
 import android.content.Context;
 import android.support.v4.app.NotificationCompat;
 
+import com.activeandroid.ActiveAndroid;
 import com.example.administrator.musictest.R;
 
 import org.srr.dev.base.BaseApplication;
@@ -17,11 +18,13 @@ public class MusicApp extends BaseApplication {
     Context mContext;
     protected NotificationCompat.Builder mBuilder;
     static final int mNotificationCompatNo = 1;
+
     @Override
     public void onCreate() {
         super.onCreate();
+        mContext = this;
         initBar();
-
+        ActiveAndroid.initialize(mContext);
     }
 
     private void initBar() {

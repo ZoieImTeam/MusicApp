@@ -56,7 +56,6 @@ public class MusicService extends Service {
         return binder;
     }
 
-
     public void playMusic(String MusicURL) {
         try {
             mMediaPlayer.reset();
@@ -74,7 +73,6 @@ public class MusicService extends Service {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
 
     @Override
