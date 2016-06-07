@@ -50,6 +50,7 @@ public class MusicService extends Service {
     private MusicBinder binder;
     private MusicEntity mMusicEntity;
 
+
     @Override
     public IBinder onBind(Intent intent) {
         binder = new MusicBinder();
@@ -94,12 +95,12 @@ public class MusicService extends Service {
                 playMusic(mMusicEntity.getUrl());
             }
         });
-        ServiceBroad receiver = new ServiceBroad();
-        IntentFilter filter = new IntentFilter();
-        filter.addAction(Constants.NOTIFY_PLAY);
-        filter.addAction(Constants.NOTIFY_NEXT);
-        filter.addAction(Constants.NOTIFY_PREV);
-        registerReceiver(receiver, filter);
+//        ServiceBroad receiver = new ServiceBroad();
+//        IntentFilter filter = new IntentFilter();
+//        filter.addAction(Constants.NOTIFY_PLAY);
+//        filter.addAction(Constants.NOTIFY_NEXT);
+//        filter.addAction(Constants.NOTIFY_PREV);
+//        registerReceiver(receiver, filter);
     }
 
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
@@ -156,7 +157,6 @@ public class MusicService extends Service {
     @Override
     public void onStart(Intent intent, int startId) {
         Log.e("MusicService", "Start Service");
-
         super.onStart(intent, startId);
     }
 
@@ -227,6 +227,7 @@ public class MusicService extends Service {
         @SuppressLint("NewApi")
         public void pauseMusic() {
             mMediaPlayer.pause();
+            sendBroad(Constants.UPDATA_PAUSE);
             //发送广播通知通知栏更新控件为暂停
 //            Intent intent = new Intent(Constants.UPDATA_PAUSE);
 //            sendBroadcast(intent);
@@ -240,11 +241,12 @@ public class MusicService extends Service {
         public void start() {
             mMediaPlayer.start();
             //发送广播通知通知栏更新控件为播放
-            Intent intent = new Intent(Constants.UPDATA_PLAY);
-            sendBroadcast(intent);
+//            Intent intent = new Intent(Constants.UPDATA_PLAY);
+//            sendBroadcast(intent);
             notification.bigContentView.setImageViewResource(R.id.notifi_start,
                     R.mipmap.minilyric_pause_button_press);
             mManager.notify(Constants.NOTIFY_ID, notification);
+            sendBroad(Constants.UPDATA_PLAY);
         }
 
         //判断音乐是否播放
@@ -277,12 +279,14 @@ public class MusicService extends Service {
         public void nextMusic() {
             musicNextIndex();
             MusicService.this.playMusic(mMusicList.get(mPosition).getUrl());
+            sendBroad(Constants.NOTIFY_NEXT);
         }
 
         //上一首音乐
         public void befoMusic() {
             musicBeforIndex();
             MusicService.this.playMusic(mMusicList.get(mPosition).getUrl());
+            sendBroad(Constants.NOTIFY_PREV);
         }
 
         // 接收界面传递过来的播放模式
@@ -303,6 +307,13 @@ public class MusicService extends Service {
         //获得音乐列表容器
         public ArrayList<MusicEntity> getPlaylist() {
             return mMusicList;
+        }
+
+        private void sendBroad (String action)
+        {
+            Intent intent=new Intent();
+            intent.setAction(action);
+            MusicService.this.sendBroadcast(intent);
         }
     }
 
