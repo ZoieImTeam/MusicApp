@@ -4,19 +4,20 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.example.administrator.musictest.MainActivity">
-    <include layout="@layout/include_title"
+
+    <include
         android:id="@+id/vw_title"
+        layout="@layout/include_title"
         android:layout_width="match_parent"
-        android:layout_height="46dp"
-        />
+        android:layout_height="46dp" />
 
     <FrameLayout
-        android:layout_below="@+id/vw_title"
         android:id="@+id/flyt_base_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/flyt_base_view2">
-    </FrameLayout>
+        android:layout_above="@+id/flyt_base_view2"
+        android:layout_below="@+id/vw_title"></FrameLayout>
+
     <FrameLayout
         android:id="@+id/flyt_base_view2"
         android:layout_width="match_parent"

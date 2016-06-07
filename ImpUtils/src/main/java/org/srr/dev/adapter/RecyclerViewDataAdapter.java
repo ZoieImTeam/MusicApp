@@ -11,7 +11,7 @@ import java.util.ArrayList;
 public abstract class RecyclerViewDataAdapter<E, T extends ViewHolder> extends
         RecyclerView.Adapter<ViewHolder> {
 
-    private ArrayList<E> mData;
+    public ArrayList<E> mData;
     private OnItemClickLitener l;
 
     public void setOnItemClickLitener(OnItemClickLitener l) {

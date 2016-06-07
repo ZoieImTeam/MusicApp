@@ -64,7 +64,6 @@ public class MusicEntity extends Model implements Parcelable, Cloneable {
     public void setImag(String imag) {
         this.imag = imag;
     }
-
     public String getSingerName() {
         return singerName;
     }
@@ -86,6 +85,9 @@ public class MusicEntity extends Model implements Parcelable, Cloneable {
         dest.writeString(this.singerName);
     }
 
+    public MusicEntity() {
+    }
+
     protected MusicEntity(Parcel in) {
         this.name = in.readString();
         this.url = in.readString();
@@ -102,4 +104,21 @@ public class MusicEntity extends Model implements Parcelable, Cloneable {
             return new MusicEntity[size];
         }
     };
+
+
+    /**
+     * 重写判断等于的方法，通过里面的值判断
+     * @param obj
+     * @return
+     */
+    @Override
+    public boolean equals(Object obj) {
+        if(obj instanceof MusicEntity)
+        {
+            MusicEntity mm= (MusicEntity) obj;
+            return this.name.equals(mm.getName())&&this.url.equals(mm.getUrl())
+                    &&this.imag.equals(mm.getImag())&&this.singerName.equals(mm.getSingerName());
+        }
+        return super.equals(obj);
+    }
 }
