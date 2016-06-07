@@ -22,6 +22,7 @@ import android.widget.ImageView;
 import android.widget.RemoteViews;
 
 import java.io.IOException;
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -57,12 +58,6 @@ public class MusicService extends Service {
     }
 
 
-    public static void startService(Context context,MusicEntity music,String action) {
-        Intent ii=new Intent();
-        ii.putExtra("entity",music);
-        ii.putExtra("action",action);
-        context.startService(ii);
-    }
 
     public void playMusic(String MusicURL) {
         try {
@@ -232,11 +227,11 @@ public class MusicService extends Service {
         public void pauseMusic() {
             mMediaPlayer.pause();
             //发送广播通知通知栏更新控件为暂停
-            Intent intent = new Intent(Constants.UPDATA_PAUSE);
-            sendBroadcast(intent);
-            notification.bigContentView.setImageViewResource(R.id.notifi_start,
-                    R.mipmap.minilyric_play_button_press);
-            mManager.notify(Constants.NOTIFY_ID, notification);
+//            Intent intent = new Intent(Constants.UPDATA_PAUSE);
+//            sendBroadcast(intent);
+//            notification.bigContentView.setImageViewResource(R.id.notifi_start,
+//                    R.mipmap.minilyric_play_button_press);
+//            mManager.notify(Constants.NOTIFY_ID, notification);
         }
 
         //播放音乐

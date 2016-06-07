@@ -73,9 +73,25 @@ public class MusicEntity implements Parcelable {
         public MusicEntity createFromParcel(Parcel source) {
             return new MusicEntity(source);
         }
-
         public MusicEntity[] newArray(int size) {
             return new MusicEntity[size];
         }
     };
+
+
+    /**
+     * 重写判断等于的方法，通过里面的值判断
+     * @param obj
+     * @return
+     */
+    @Override
+    public boolean equals(Object obj) {
+        if(obj instanceof MusicEntity)
+        {
+            MusicEntity mm= (MusicEntity) obj;
+            return this.name.equals(mm.getName())&&this.url.equals(mm.getUrl())
+                    &&this.imag.equals(mm.getImag())&&this.singerName.equals(mm.getSingerName());
+        }
+        return super.equals(obj);
+    }
 }

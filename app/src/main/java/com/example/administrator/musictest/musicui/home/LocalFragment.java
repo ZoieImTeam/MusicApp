@@ -32,7 +32,7 @@ import butterknife.ButterKnife;
  * E-mail：KyluZoi@gmail.com
  * 2016/6/2
  */
-public class LocalFragment extends BaseFragment implements ServiceConnection {
+public class LocalFragment extends BaseFragment implements ServiceConnection{
 
     @Bind(R.id.rv_base)
     RecyclerView rvBase;
@@ -62,7 +62,7 @@ public class LocalFragment extends BaseFragment implements ServiceConnection {
     protected void initView(View contentView) {
         ButterKnife.bind(this, contentView);
         mIntent = new Intent(getActivity(), MusicService.class);
-        getContext().bindService(mIntent,connection, Context.BIND_AUTO_CREATE);
+        getContext().bindService(mIntent, connection, Context.BIND_AUTO_CREATE);
     }
 
     @Override
@@ -107,7 +107,6 @@ public class LocalFragment extends BaseFragment implements ServiceConnection {
         TextView tvMusicName;
         @Bind(R.id.swipe)
         SwipeLayout swipe;
-
         public VH(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
@@ -117,21 +116,27 @@ public class LocalFragment extends BaseFragment implements ServiceConnection {
     }
 
 
-    class MusicListAdapter extends RecyclerViewDataAdapter<MusicEntity, VH>  {
+    class MusicListAdapter extends RecyclerViewDataAdapter<MusicEntity, VH> {
 
         @Override
         public void onBindHolder(final VH holder, int i, final MusicEntity musicEntity) {
             holder.tvMusicName.setText(musicEntity.getName());
-            View.OnClickListener l =new View.OnClickListener() {
+            View.OnClickListener l = new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    mMusicBinder.playMusic(musicEntity.getUrl());
+                    switch (v.getId()) {
+                        // TODO: 2016/6/6 预留列表点击事件，播放||停止
+                        case R.id.tv_music_name:
+                            if(!mMusicBinder.isStart()) {
+                                mMusicBinder.playMusic(musicEntity.getUrl());
+                            }
+                            else mMusicBinder.pauseMusic();
+                    }
                 }
             };
             holder.tvMusicName.setOnClickListener(l);
 
         }
-
 
 
         @Override
