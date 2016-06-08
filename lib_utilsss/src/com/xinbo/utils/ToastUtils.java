@@ -14,7 +14,6 @@ public final class ToastUtils {
 	private static Toast toast;
 	public  static void showToast(Context context, String text) {
 //		Toast toast = Toast.makeText(this, "toast", Toast.LENGTH_LONG);
-		// 如果之前有任务，就取消
 		if (toast != null){
 			toast.cancel();
 		}

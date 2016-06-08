@@ -9,7 +9,9 @@ public class Constants {
 
     //播放模式
     public static final int MODEL_ORDER = 0;
+    //随机
     public static final int MODEL_RANDOM = 1;
+    //单曲循环
     public static final int MODEL_SINGEL = 2;
 
     //播放 , 下一首 , 上一首

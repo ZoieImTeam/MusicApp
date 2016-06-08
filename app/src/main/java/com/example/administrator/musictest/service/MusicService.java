@@ -95,12 +95,6 @@ public class MusicService extends Service {
                 playMusic(mMusicEntity.getUrl());
             }
         });
-//        ServiceBroad receiver = new ServiceBroad();
-//        IntentFilter filter = new IntentFilter();
-//        filter.addAction(Constants.NOTIFY_PLAY);
-//        filter.addAction(Constants.NOTIFY_NEXT);
-//        filter.addAction(Constants.NOTIFY_PREV);
-//        registerReceiver(receiver, filter);
     }
 
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
@@ -156,14 +150,12 @@ public class MusicService extends Service {
 
     @Override
     public void onStart(Intent intent, int startId) {
-        Log.e("MusicService", "Start Service");
         super.onStart(intent, startId);
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        Log.d("MusicService", "stop Service");
     }
 
     // 播放下一首
@@ -217,9 +209,12 @@ public class MusicService extends Service {
     }
 
     public class MusicBinder extends Binder {
+
+
+        //从头开始播放音乐
         public void playMusic(String musicUrl) {
-            Log.d("MusicBinder", musicUrl);
             MusicService.this.playMusic(musicUrl);
+            sendBroad(Constants.UPDATA_PLAY);
         }
 
 
@@ -228,12 +223,6 @@ public class MusicService extends Service {
         public void pauseMusic() {
             mMediaPlayer.pause();
             sendBroad(Constants.UPDATA_PAUSE);
-            //发送广播通知通知栏更新控件为暂停
-//            Intent intent = new Intent(Constants.UPDATA_PAUSE);
-//            sendBroadcast(intent);
-//            notification.bigContentView.setImageViewResource(R.id.notifi_start,
-//                    R.mipmap.minilyric_play_button_press);
-//            mManager.notify(Constants.NOTIFY_ID, notification);
         }
 
         //播放音乐
@@ -241,12 +230,7 @@ public class MusicService extends Service {
         public void start() {
             mMediaPlayer.start();
             //发送广播通知通知栏更新控件为播放
-//            Intent intent = new Intent(Constants.UPDATA_PLAY);
-//            sendBroadcast(intent);
-            notification.bigContentView.setImageViewResource(R.id.notifi_start,
-                    R.mipmap.minilyric_pause_button_press);
-            mManager.notify(Constants.NOTIFY_ID, notification);
-            sendBroad(Constants.UPDATA_PLAY);
+
         }
 
         //判断音乐是否播放
@@ -314,42 +298,6 @@ public class MusicService extends Service {
             Intent intent=new Intent();
             intent.setAction(action);
             MusicService.this.sendBroadcast(intent);
-        }
-    }
-
-
-    /**
-     * 服务接收到广播后控制音乐
-     */
-    class ServiceBroad extends NotifyReciverBroad{
-
-        @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
-        @Override
-        protected void notifityPlay() {
-            if (isPrepared) {
-                if (binder.isStart()) {
-                    binder.pauseMusic();
-                    notification.bigContentView.setImageViewResource(R.id.notifi_circle,
-                            R.mipmap.minilyric_play_button_press);
-                } else {
-                    binder.start();
-                    notification.bigContentView.setImageViewResource(R.id.notifi_circle,
-                            R.mipmap.minilyric_pause_button_press);
-                }
-            }
-            mManager.notify(Constants.NOTIFY_ID, notification);
-        }
-
-        @Override
-        protected void notifityPrev() {
-            binder.nextMusic();
-            mManager.notify(Constants.NOTIFY_ID, notification);
-        }
-
-        @Override
-        protected void notifyPrev() {
-            binder.befoMusic();
-            mManager.notify(Constants.NOTIFY_ID, notification);
         }
     }
 

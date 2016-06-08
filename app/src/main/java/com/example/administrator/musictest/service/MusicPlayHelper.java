@@ -25,6 +25,8 @@ public class MusicPlayHelper implements ServiceConnection {
     private Intent mIntent;
     private Boolean mIsInit=false;
 
+
+
     public MusicPlayHelper(Activity context) {
         this.mContext = context;
     }

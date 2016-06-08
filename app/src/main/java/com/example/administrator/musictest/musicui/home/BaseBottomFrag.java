@@ -2,17 +2,23 @@ package com.example.administrator.musictest.musicui.home;
 
 import android.content.ComponentName;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.administrator.musictest.Constant.Constants;
 import com.example.administrator.musictest.R;
+import com.example.administrator.musictest.service.ChangeViewImp;
+import com.example.administrator.musictest.service.MusicBroadCast;
 import com.example.administrator.musictest.service.MusicPlayHelper;
 import com.example.administrator.musictest.service.MusicService;
+import com.example.administrator.musictest.service.NotifyReciverBroad;
 
 import org.srr.dev.base.BaseFragment;
 import org.srr.dev.view.CircleImageView;
@@ -26,7 +32,7 @@ import butterknife.OnClick;
  * E-mail：KyluZoi@gmail.com
  * 2016/6/4
  */
-public class BaseBottomFrag extends BaseFragment implements ServiceConnection {
+public class BaseBottomFrag extends BaseFragment implements ServiceConnection,ChangeViewImp {
 
     @Bind(R.id.notifi_circle)
     CircleImageView notifiCircle;
@@ -41,10 +47,9 @@ public class BaseBottomFrag extends BaseFragment implements ServiceConnection {
     @Bind(R.id.notifi_last)
     TextView notifiLast;
 
-    private ServiceConnection mMusicCon=this;
     protected MusicService.MusicBinder mMusicBinder;
-    private Intent mIntent;
     protected MusicPlayHelper helper;
+    MusicBroadCast mBroadCast;
 
     public static BaseBottomFrag newInstance() {
         Bundle args = new Bundle();
@@ -62,6 +67,8 @@ public class BaseBottomFrag extends BaseFragment implements ServiceConnection {
     protected void initView(View contentView) {
         ButterKnife.bind(this, contentView);
         helper=new MusicPlayHelper(getActivity());
+        mBroadCast=new MusicBroadCast(getContext());
+        mBroadCast.setImpl(this);
     }
 
     @Override
@@ -79,6 +86,7 @@ public class BaseBottomFrag extends BaseFragment implements ServiceConnection {
         super.onDestroyView();
         ButterKnife.unbind(this);
     }
+
 
     @OnClick({R.id.notifi_next, R.id.notifi_start, R.id.notifi_last})
     public void onClick(View view) {
@@ -106,5 +114,23 @@ public class BaseBottomFrag extends BaseFragment implements ServiceConnection {
     @Override
     public void onServiceDisconnected(ComponentName name) {
 
+    }
+
+    @Override
+    public void startplay() {
+        notifiStart.setBackgroundResource(R.mipmap.minilyric_pause_button_press);
+    }
+
+    @Override
+    public void pauseplay() {
+        notifiStart.setBackgroundResource(R.mipmap.bf_zt);
+    }
+
+    @Override
+    public void nextMusic() {
+    }
+
+    @Override
+    public void preMusic() {
     }
 }
